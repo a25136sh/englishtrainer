@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import { UserFilled } from '@element-plus/icons-vue'
+import { useUserStore } from './stores/user'
+
+const userStore = useUserStore()
 </script>
 
 <template>
@@ -8,10 +11,10 @@ import { UserFilled } from '@element-plus/icons-vue'
     <div class="title">
       <img class="logo" src="@/assets/logo.png" />
       <span class="wdxl-lubrifont-jp-n-regular">専門職英会話</span>
-      <span class="mochiy-pop-p-one-regular">トレーナー</span>
+      <span class="mochiy-pop-p-one-regular" style="margin-top: -6px">トレーナー</span>
     </div>
     <div class="user">
-      <span class="username">guest</span>
+      <span class="username">{{ userStore.username }}</span>
       <el-avatar :icon="UserFilled" />
     </div>
   </header>
@@ -36,6 +39,7 @@ header {
   display: block;
   width: 100px;
   height: 100px;
+  margin-right: 0.5em;
 }
 
 .title {

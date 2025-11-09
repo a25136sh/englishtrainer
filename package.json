@@ -16,6 +16,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.927.0",
     "element-plus": "^2.11.7",
     "pinia": "^3.0.3",
     "vue": "^3.5.22",

@@ -5,7 +5,7 @@ body {
 main {
   background: #fff;
   margin: 0 3rem;
-  padding: 1rem 3rem;
+  padding: 1rem 3rem 2rem;
   border-radius: 1em;
-  min-height: 20em;
+  min-height: 40em;
 }
