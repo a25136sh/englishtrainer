@@ -6,14 +6,14 @@ Vue.js + Element Plusで生成される英語学習アプリケーションフ�
 
 以下のAPIと組み合わせて機能する英語学習アプリケーションです。単体では機能せず、API環境を用意する必要があります。
 
-  https://github.com/iwashi623/genred_english
+https://github.com/iwashi623/genred_english
 
 ### 技術スタック
 
-* アプリケーションフレームワーク: Vue.js
-* UIコンポーネント: Element Plus
-* データストア: Pinia
-* ルーティング: Vue Router
+- アプリケーションフレームワーク: Vue.js
+- UIコンポーネント: Element Plus
+- データストア: Pinia
+- ルーティング: Vue Router
 
 ## 推奨開発環境
 
@@ -24,7 +24,7 @@ Vue.js + Element Plusで生成される英語学習アプリケーションフ�
 ### ブラウザ環境
 
 - Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
+  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
   - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
 - Firefox:
   - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
