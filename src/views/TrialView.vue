@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { ElMessage } from 'element-plus'
-import { Microphone, Tools, VideoPause } from '@element-plus/icons-vue'
+import { Check, Microphone, Tools } from '@element-plus/icons-vue'
 import axios from 'axios'
 import { useProblemStore } from '@/stores/problem'
 
@@ -82,7 +82,7 @@ const micOff = () => {
         <Microphone @click="micOn" />
       </el-icon>
       <el-icon size="100" v-else>
-        <VideoPause @click="micOff" />
+        <Check @click="micOff" />
       </el-icon>
     </el-button>
     <div class="property">
