@@ -1,14 +1,19 @@
 <script setup lang="ts">
+import router from '@/router'
 import { RouterView } from 'vue-router'
 import { UserFilled } from '@element-plus/icons-vue'
 import { useUserStore } from './stores/user'
 
 const userStore = useUserStore()
+
+const backHome = () => {
+  router.push('/')
+}
 </script>
 
 <template>
   <header>
-    <div class="title">
+    <div class="title" @click="backHome">
       <img class="logo" src="@/assets/logo.png" />
       <span class="wdxl-lubrifont-jp-n-regular">専門職英会話</span>
       <span class="mochiy-pop-p-one-regular" style="margin-top: -6px">トレーナー</span>
@@ -47,6 +52,14 @@ header {
   font-size: 2em;
   display: flex;
   align-items: center;
+}
+
+.title img {
+  cursor: pointer;
+}
+
+.title span {
+  cursor: pointer;
 }
 
 .user {

@@ -1,51 +1,60 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { ElMessage } from 'element-plus'
-import type { UploadInstance } from 'element-plus'
-import { Microphone, Tools } from '@element-plus/icons-vue'
+import { Microphone, Tools, VideoPause } from '@element-plus/icons-vue'
+import axios from 'axios'
+import { useProblemStore } from '@/stores/problem'
 
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+const problemStore = useProblemStore()
 
 const difficulty = ref(Math.floor(Math.random() * 5))
-const text = ref(
-  'In order to increase the number of examines for the information architecture course, I think it is important to reach out more to the developer community. Specifically, I think possible to increase the number of potentialncreasing opportunities to get to know, such as sponsoring language conferences.',
-)
-const uploadRef = ref<UploadInstance>()
-const fileList = ref([])
+const text = computed(() => {
+  return problemStore.problems[0]?.text || ''
+})
+const recording = ref(false)
+const chunks = ref<Blob[]>([])
 
-const handleFileChange = (_, fileList_) => {
-  fileList.value = fileList_
+const micOn = async () => {
+  try {
+    recording.value = true
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+    const recorder = new MediaRecorder(stream)
+    recorder.ondataavailable = async (event) => {
+      const blob = event.data
+      chunks.value.push(blob)
+    }
+    recorder.onstop = async () => {
+      const file = new File(chunks.value, 'dummy.mp3')
+
+      const params = new FormData()
+      params.append('user_id', '1')
+      params.append('problem_id', '1')
+      params.append('file', file)
+
+      axios
+        .post(`${import.meta.env.VITE_API_HOST}/upload`, params)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((err) => {
+          ElMessage.error({
+            message: '音声ファイルのアップロードに失敗',
+          })
+          console.log(err)
+        })
+    }
+    recorder.start(1000)
+  } catch (err) {
+    console.log(err)
+    ElMessage.error({
+      message: 'マイクを許可してください',
+    })
+    recording.value = false
+  }
 }
 
-const s3client = new S3Client({
-  region: 'ap-northeast-1',
-  credentials: {
-    accessKeyId: 'YOUR_ACCESS_KEY_ID',
-    secretAccessKey: 'YOUR_SECRET_ACCESS_KEY',
-  },
-  requestChecksumCalculation: 'WHEN_REQUIRED',
-})
-const upload = async () => {
-  const file = fileList.value[0]
-  if (!file) {
-    ElMessage('ファイルを選択してください。')
-    return
-  }
-  const params = {
-    Bucket: 'try-sound.3q-aws-g3.com',
-    Key: file.name,
-    Body: file,
-  }
-  console.log(params)
-  try {
-    const command = new PutObjectCommand(params)
-    const data = await s3client.send(command)
-    console.log('アップロード成功:', data)
-    ElMessage('アップロード成功')
-  } catch (err) {
-    console.error('アップロードエラー:', err)
-    ElMessage('アップロードエラー')
-  }
+const micOff = async () => {
+  recording.value = false
 }
 </script>
 
@@ -54,19 +63,18 @@ const upload = async () => {
     <h3>以下のテキストを読み上げてください</h3>
     <h1>
       <el-skeleton v-if="text == ''" />
-      <div class="playfair-display">
+      <div class="playfair-display" v-else>
         {{ text }}
       </div>
     </h1>
     <el-divider />
-    <el-upload ref="uploadRef" :auto-upload="false" @change="handleFileChange">
-      <template #trigger>
-        <el-button>ファイル選択</el-button>
-      </template>
-    </el-upload>
-    <br />
     <el-button circle style="width: 10em; height: 10em">
-      <el-icon size="100"><Microphone @click="upload" /></el-icon>
+      <el-icon size="100" v-if="!recording">
+        <Microphone @click="micOn" />
+      </el-icon>
+      <el-icon size="100" v-else>
+        <VideoPause @click="micOff" />
+      </el-icon>
     </el-button>
     <div class="property">
       <div style="margin-bottom: 1em; background: #555; padding: 0.5em 0; color: #fff">
