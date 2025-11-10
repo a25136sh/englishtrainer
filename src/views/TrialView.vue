@@ -13,48 +13,57 @@ const text = computed(() => {
 })
 const recording = ref(false)
 const chunks = ref<Blob[]>([])
+const recorder = ref<MediaRecorder>()
 
-const micOn = async () => {
-  try {
-    recording.value = true
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-    const recorder = new MediaRecorder(stream)
-    recorder.ondataavailable = async (event) => {
-      const blob = event.data
-      chunks.value.push(blob)
-    }
-    recorder.onstop = async () => {
-      const file = new File(chunks.value, 'dummy.mp3')
+const micOn = () => {
+  recording.value = true
+  navigator.mediaDevices
+    .getUserMedia({ audio: true })
+    .then((stream) => {
+      if (!recorder.value) {
+        recorder.value = new MediaRecorder(stream)
+        recorder.value.ondataavailable = async (event) => {
+          const blob = event.data
+          chunks.value.push(blob)
+        }
+        recorder.value.onstop = async () => {
+          const file = new File(chunks.value, 'dummy.mp3')
 
-      const params = new FormData()
-      params.append('user_id', '1')
-      params.append('problem_id', '1')
-      params.append('file', file)
+          const params = new FormData()
+          params.append('user_id', '1')
+          params.append('problem_id', '1')
+          params.append('file', file)
 
-      axios
-        .post(`${import.meta.env.VITE_API_HOST}/upload`, params)
-        .then((response) => {
-          console.log(response)
-        })
-        .catch((err) => {
-          ElMessage.error({
-            message: '音声ファイルのアップロードに失敗',
-          })
-          console.log(err)
-        })
-    }
-    recorder.start(1000)
-  } catch (err) {
-    console.log(err)
-    ElMessage.error({
-      message: 'マイクを許可してください',
+          axios
+            .post(`${import.meta.env.VITE_API_HOST}/upload`, params)
+            .then((response) => {
+              console.log(response)
+            })
+            .catch((err) => {
+              ElMessage.error({
+                message: '音声ファイルのアップロードに失敗',
+              })
+              console.log(err)
+            })
+            .finally(() => {
+              chunks.value = []
+            })
+        }
+      }
+      recorder.value.start(1000)
     })
-    recording.value = false
-  }
+    .catch((err) => {
+      console.log(err)
+      ElMessage.error({
+        message: 'マイクを許可してください',
+      })
+      recording.value = false
+    })
 }
 
-const micOff = async () => {
+const micOff = () => {
   recording.value = false
+  recorder.value?.stop()
 }
 </script>
 
