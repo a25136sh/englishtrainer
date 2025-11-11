@@ -27,11 +27,9 @@ const micOn = () => {
           chunks.value.push(blob)
         }
         recorder.value.onstop = async () => {
-          const file = new File(chunks.value, 'dummy.mp3')
+          const file = new File(chunks.value, '1_1.mp3')
 
           const params = new FormData()
-          params.append('user_id', '1')
-          params.append('problem_id', '1')
           params.append('file', file)
 
           axios
