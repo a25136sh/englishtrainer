@@ -4,6 +4,7 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 
 export const useProblemStore = defineStore('problem', () => {
+  const genre = ref('1')
   const problems = ref([
     {
       id: 1,
@@ -28,5 +29,5 @@ export const useProblemStore = defineStore('problem', () => {
       })
   }
 
-  return { problems, loadProblem }
+  return { genre, problems, loadProblem }
 })

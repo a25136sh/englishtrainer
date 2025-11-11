@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import router from '@/router'
 import { useProblemStore } from '@/stores/problem'
 
 const problemStore = useProblemStore()
+
+const genre = computed(() => problemStore.genre)
 
 const start = () => {
   problemStore.loadProblem()
@@ -12,7 +15,13 @@ const start = () => {
 
 <template>
   <div style="text-align: center">
-    <el-button size="large" @click="start">
+    <div>
+      <h4>職種選択</h4>
+      <el-radio-group v-model="genre">
+        <el-radio value="1" size="large" border>エンジニア</el-radio>
+      </el-radio-group>
+    </div>
+    <el-button size="large" @click="start" style="margin-top: 2em; padding: 3em 2em">
       <span style="font-size: 32px">学習開始</span>
     </el-button>
   </div>
