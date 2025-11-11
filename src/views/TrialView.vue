@@ -10,7 +10,7 @@ const problemStore = useProblemStore()
 
 const difficulty = ref(Math.floor(Math.random() * 5))
 const text = computed(() => {
-  return problemStore.problems[0]?.text || ''
+  return problemStore.problems[problemStore.index]?.text || ''
 })
 const recording = ref(false)
 const chunks = ref<Blob[]>([])
