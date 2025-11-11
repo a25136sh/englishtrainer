@@ -14,6 +14,7 @@ const text = computed(() => {
 const recording = ref(false)
 const chunks = ref<Blob[]>([])
 const recorder = ref<MediaRecorder>()
+const analyzing = ref(false)
 
 const micOn = () => {
   recording.value = true
@@ -36,12 +37,17 @@ const micOn = () => {
             .post(`${import.meta.env.VITE_API_HOST}/upload`, params)
             .then((response) => {
               console.log(response)
+              analyzing.value = true
+              ElMessage.info({
+                message: '回答を解析中...',
+              })
             })
             .catch((err) => {
               ElMessage.error({
                 message: '音声ファイルのアップロードに失敗',
               })
               console.log(err)
+              recording.value = false
             })
             .finally(() => {
               chunks.value = []
@@ -60,8 +66,7 @@ const micOn = () => {
 }
 
 const micOff = () => {
-  recording.value = false
-  recorder.value?.stop()
+  if (!analyzing.value) recorder.value?.stop()
 }
 </script>
 
