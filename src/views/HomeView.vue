@@ -15,14 +15,18 @@ const start = () => {
 
 <template>
   <div style="text-align: center">
-    <div>
-      <h4>職種選択</h4>
-      <el-radio-group v-model="genre">
-        <el-radio value="1" size="large" border>エンジニア</el-radio>
-      </el-radio-group>
+    <div style="display: flex; justify-content: space-around">
+      <div>
+        <h4>職種選択</h4>
+        <el-radio-group v-model="genre">
+          <el-radio value="1" size="large" border>エンジニア</el-radio>
+        </el-radio-group>
+        <div>
+          <el-button size="large" @click="start" style="margin-top: 2em; padding: 3em 2em">
+            <span style="font-size: 32px">学習開始</span>
+          </el-button>
+        </div>
+      </div>
     </div>
-    <el-button size="large" @click="start" style="margin-top: 2em; padding: 3em 2em">
-      <span style="font-size: 32px">学習開始</span>
-    </el-button>
   </div>
 </template>

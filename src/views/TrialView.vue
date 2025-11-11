@@ -4,6 +4,7 @@ import { ElMessage } from 'element-plus'
 import { Check, Microphone, Tools } from '@element-plus/icons-vue'
 import axios from 'axios'
 import { useProblemStore } from '@/stores/problem'
+import router from '@/router'
 
 const problemStore = useProblemStore()
 
@@ -41,6 +42,7 @@ const micOn = () => {
               ElMessage.info({
                 message: '回答を解析中...',
               })
+              router.push({ name: 'wait' })
             })
             .catch((err) => {
               ElMessage.error({
