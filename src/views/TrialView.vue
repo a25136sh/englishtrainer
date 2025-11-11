@@ -96,7 +96,11 @@ const micOff = () => {
           <el-icon><Tools /></el-icon>
         </strong>
       </div>
-      <el-progress :percentage="100" :format="() => '1/1'" style="margin: 0 1em" />
+      <el-progress
+        :percentage="(1 / problemStore.problems.length) * 100"
+        :format="() => `1/${problemStore.problems.length}`"
+        style="margin: 0 1em"
+      />
       難易度: <el-rate v-model="difficulty" disabled size="small" />
     </div>
   </div>
