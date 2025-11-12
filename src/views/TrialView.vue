@@ -4,10 +4,12 @@ import { ElMessage } from 'element-plus'
 import { Check, Microphone } from '@element-plus/icons-vue'
 import axios from 'axios'
 
+import { useUserStore } from '@/stores/user'
 import { useProblemStore } from '@/stores/problem'
 import router from '@/router'
 import ProgressBox from '@/components/ProgressBox.vue'
 
+const userStore = useUserStore()
 const problemStore = useProblemStore()
 
 const text = computed(() => {
@@ -30,7 +32,8 @@ const micOn = () => {
           chunks.value.push(blob)
         }
         recorder.value.onstop = async () => {
-          const file = new File(chunks.value, '1_1.mp3')
+          const problemId = problemStore.problems[problemStore.index]?.id
+          const file = new File(chunks.value, `${problemId}_${userStore.userId}.mp3`)
 
           const params = new FormData()
           params.append('file', file)
