@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 
+import ProgressBox from '@/components/ProgressBox.vue'
+
 const score = ref(0)
 const review = computed(() => {
   if (score.value < 20) {
@@ -23,13 +25,14 @@ onMounted(() => {
 
 <template>
   <div style="text-align: center">
-    <h3>回答結果</h3>
+    <h2>回答結果</h2>
     <el-progress type="dashboard" :percentage="score">
       <template #default="{ percentage }">
         <span class="percentage-value">{{ percentage }}</span>
         <span class="percentage-label">{{ review }}</span>
       </template>
     </el-progress>
+    <ProgressBox />
   </div>
 </template>
 

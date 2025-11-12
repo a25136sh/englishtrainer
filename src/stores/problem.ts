@@ -10,7 +10,7 @@ export const useProblemStore = defineStore('problem', () => {
     {
       id: 1,
       genre_id: 1,
-      text: 'In order to increase the number of examines for the information architecture course, I think it is important to reach out more to the developer community. Specifically, I think possible to increase the number of potentialncreasing opportunities to get to know, such as sponsoring language conferences.',
+      text: 'What time was mentioned in the recording?',
       answer_file_path: '/answers/problem_001.mp3',
       created_at: '2025-11-07T15:30:14',
     },
