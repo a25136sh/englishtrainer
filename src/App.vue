@@ -88,4 +88,8 @@ footer {
   color: #fff;
   margin-top: 1em;
 }
+
+footer a {
+  color: #fff;
+}
 </style>
