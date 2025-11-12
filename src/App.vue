@@ -27,7 +27,19 @@ const backHome = () => {
   <main>
     <RouterView />
   </main>
-  <footer>Group 3</footer>
+  <footer>
+    <div><b>Group 3</b></div>
+    <div>
+      <a href="https://github.com/a25136sh/englishtrainer"
+        >https://github.com/a25136sh/englishtrainer</a
+      >
+    </div>
+    <div>
+      <a href="https://github.com/iwashi623/genred_english"
+        >https://github.com/iwashi623/genred_english</a
+      >
+    </div>
+  </footer>
 </template>
 
 <style scoped>
