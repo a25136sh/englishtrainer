@@ -36,6 +36,9 @@ onMounted(() => {
       </template>
     </el-progress>
     <ProgressBox />
+    <div class="control">
+      <el-button>次へ</el-button>
+    </div>
   </div>
 </template>
 
@@ -48,5 +51,8 @@ onMounted(() => {
   display: block;
   margin-top: 10px;
   font-size: 12px;
+}
+.control {
+  margin-top: 5em;
 }
 </style>
