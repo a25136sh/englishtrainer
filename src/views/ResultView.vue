@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 
+import { useProblemStore } from '@/stores/problem'
 import ProgressBox from '@/components/ProgressBox.vue'
+
+const problemStore = useProblemStore()
 
 const score = ref(0)
 const review = computed(() => {
@@ -18,7 +21,7 @@ const review = computed(() => {
 
 onMounted(() => {
   setTimeout(() => {
-    score.value = 80
+    score.value = problemStore.score
   }, 0)
 })
 </script>

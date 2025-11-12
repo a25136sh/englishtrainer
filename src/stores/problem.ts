@@ -6,6 +6,7 @@ import { ElMessage } from 'element-plus'
 export const useProblemStore = defineStore('problem', () => {
   const genre = ref('1')
   const index = ref(0)
+  const score = ref(80)
   const problems = ref([
     {
       id: 1,
@@ -30,5 +31,5 @@ export const useProblemStore = defineStore('problem', () => {
       })
   }
 
-  return { genre, index, problems, loadProblem }
+  return { genre, index, score, problems, loadProblem }
 })

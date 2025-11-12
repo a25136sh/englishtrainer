@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { Tickets } from '@element-plus/icons-vue'
 
 import router from '@/router'
 import { useProblemStore } from '@/stores/problem'
@@ -24,6 +25,7 @@ const start = () => {
         </el-radio-group>
         <div>
           <el-button size="large" @click="start" style="margin-top: 2em; padding: 3em 2em">
+            <el-icon size="30"><Tickets /></el-icon>
             <span style="font-size: 32px">学習開始</span>
           </el-button>
         </div>
