@@ -66,9 +66,9 @@ const start = () => {
       </div>
     </div>
     <div style="display: flex; justify-content: space-around">
-      <div style="width: 300px; margin-top: 1em">
+      <div style="width: 320px; margin-top: 1em">
         <h4>スコアランキング</h4>
-        <el-table :data="ranking" style="width: 300px">
+        <el-table :data="ranking" style="width: 320px">
           <el-table-column prop="user" label="ユーザー名" />
           <el-table-column prop="score" label="スコア" width="100" />
         </el-table>
