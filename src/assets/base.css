@@ -9,3 +9,9 @@ main {
   border-radius: 1em;
   min-height: 40em;
 }
+
+@media screen and (max-width: 640px) {
+  main {
+    margin: 0;
+  }
+}
