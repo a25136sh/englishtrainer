@@ -78,7 +78,7 @@ footer.et_footer a {
 }
 
 @media screen and (max-width: 640px) {
-  header {
+  header.et_header {
     margin: -1em 0 -1.5em 0;
   }
 
