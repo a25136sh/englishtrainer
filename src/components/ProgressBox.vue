@@ -2,8 +2,10 @@
 import { ref } from 'vue'
 import { Tools } from '@element-plus/icons-vue'
 
+import { useGenreStore } from '@/stores/genre'
 import { useProblemStore } from '@/stores/problem'
 
+const genreStore = useGenreStore()
 const problemStore = useProblemStore()
 
 const difficulty = ref(Math.floor(Math.random() * 5))
@@ -12,9 +14,9 @@ const difficulty = ref(Math.floor(Math.random() * 5))
 <template>
   <div class="property">
     <div style="margin-bottom: 1em; background: #555; padding: 0.5em 0; color: #fff">
-      <span>ジャンル:</span>
+      <span>職種:</span>
       <strong>
-        エンジニア
+        {{ genreStore.genres.find((x) => x.id == Number(problemStore.genre))?.name }}
         <el-icon><Tools /></el-icon>
       </strong>
     </div>

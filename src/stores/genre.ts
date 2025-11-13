@@ -4,8 +4,16 @@ import { defineStore } from 'pinia'
 export const useGenreStore = defineStore('genre', () => {
   const genres = ref([
     {
-      name: 'エンジニア',
+      name: 'アプリケーションエンジニア',
       id: 1,
+    },
+    {
+      name: '医者',
+      id: 2,
+    },
+    {
+      name: 'プロジェクトマネージャ',
+      id: 3,
     },
   ])
 

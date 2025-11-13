@@ -1,13 +1,17 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { Tickets } from '@element-plus/icons-vue'
+import { ElCarousel } from 'element-plus'
 
 import router from '@/router'
 import { useGenreStore } from '@/stores/genre'
 import { useProblemStore } from '@/stores/problem'
+import { engineer, doctor, pm } from '@/assets/images'
 
 const genreStore = useGenreStore()
 const problemStore = useProblemStore()
 
+const jobCard = ref()
 const ranking = [
   {
     user: 'Tom',
@@ -40,6 +44,14 @@ const start = () => {
   problemStore.loadProblem()
   router.push({ name: 'try', params: { id: problemStore.genre } })
 }
+const clickImage = (current: number, prev: number) => {
+  console.log(current, prev)
+  problemStore.genre = String(current + 1)
+}
+const clickGenre = (id: number) => {
+  console.log(id)
+  jobCard.value.setActiveItem(id - 1)
+}
 </script>
 
 <template>
@@ -54,6 +66,7 @@ const start = () => {
             v-for="genre in genreStore.genres"
             :key="genre.id"
             border
+            @click="clickGenre(genre.id)"
             >{{ genre.name }}</el-radio
           >
         </el-radio-group>
@@ -65,6 +78,19 @@ const start = () => {
         </div>
       </div>
     </div>
+    <el-carousel
+      height="400px"
+      class="jobcard"
+      :autoplay="false"
+      trigger="click"
+      :card-scale="0.8"
+      @change="clickImage"
+      ref="jobCard"
+    >
+      <el-carousel-item><el-image class="jobimage" :src="engineer" fit="cover" /></el-carousel-item>
+      <el-carousel-item><el-image class="jobimage" :src="doctor" fit="cover" /></el-carousel-item>
+      <el-carousel-item><el-image class="jobimage" :src="pm" fit="cover" /></el-carousel-item>
+    </el-carousel>
     <div style="display: flex; justify-content: space-around">
       <div style="width: 320px; margin-top: 1em">
         <h4>スコアランキング</h4>

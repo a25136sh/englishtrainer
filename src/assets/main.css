@@ -77,6 +77,16 @@ footer.et_footer a {
   color: #fff;
 }
 
+.jobcard {
+  width: 100%;
+  margin-top: 3em;
+}
+
+.jobimage {
+  width: 70%;
+  height: 400px;
+}
+
 @media screen and (max-width: 640px) {
   header.et_header {
     margin: -1em 0 -1.5em 0;
@@ -90,5 +100,9 @@ footer.et_footer a {
     margin-left: -65px;
     padding-top: 50px;
     font-size: 0.6em;
+  }
+
+  .jobcard {
+    display: none;
   }
 }
