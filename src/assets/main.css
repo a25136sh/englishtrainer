@@ -27,7 +27,7 @@
   font-style: normal;
 }
 
-header {
+header.et_header {
   line-height: 1.5;
   background: #323e56;
   display: flex;
@@ -67,13 +67,13 @@ header {
   color: #fff;
 }
 
-footer {
+footer.et_footer {
   text-align: center;
   color: #fff;
   margin-top: 1em;
 }
 
-footer a {
+footer.et_footer a {
   color: #fff;
 }
 
