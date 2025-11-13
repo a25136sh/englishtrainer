@@ -4,10 +4,10 @@ import { ElMessage } from 'element-plus'
 import { Check, Microphone } from '@element-plus/icons-vue'
 import axios from 'axios'
 
-import { useUserStore } from '@/stores/user'
-import { useProblemStore } from '@/stores/problem'
 import router from '@/router'
 import ProgressBox from '@/components/ProgressBox.vue'
+import { useUserStore } from '@/stores/user'
+import { useProblemStore } from '@/stores/problem'
 
 const userStore = useUserStore()
 const problemStore = useProblemStore()

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { Tickets } from '@element-plus/icons-vue'
 
 import router from '@/router'
@@ -7,11 +6,9 @@ import { useProblemStore } from '@/stores/problem'
 
 const problemStore = useProblemStore()
 
-const genre = computed(() => problemStore.genre)
-
 const start = () => {
   problemStore.loadProblem()
-  router.push({ name: 'try', params: { id: '1' } })
+  router.push({ name: 'try', params: { id: problemStore.genre } })
 }
 </script>
 
@@ -20,7 +17,7 @@ const start = () => {
     <div style="display: flex; justify-content: space-around">
       <div>
         <h4>職種選択</h4>
-        <el-radio-group v-model="genre">
+        <el-radio-group v-model="problemStore.genre">
           <el-radio value="1" size="large" border>エンジニア</el-radio>
         </el-radio-group>
         <div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 
+import router from '@/router'
 import { useProblemStore } from '@/stores/problem'
 import ProgressBox from '@/components/ProgressBox.vue'
 
@@ -19,6 +20,11 @@ const review = computed(() => {
   }
 })
 
+const pushNext = () => {
+  problemStore.nextProblem()
+  router.push({ name: 'try', params: { id: problemStore.genre } })
+}
+
 onMounted(() => {
   setTimeout(() => {
     score.value = problemStore.score
@@ -35,10 +41,11 @@ onMounted(() => {
         <span class="percentage-label">{{ review }}</span>
       </template>
     </el-progress>
-    <ProgressBox />
     <div class="control">
-      <el-button>次へ</el-button>
+      <el-button size="large" v-if="problemStore.isLast">終了</el-button>
+      <el-button size="large" @click="pushNext" v-else>次へ</el-button>
     </div>
+    <ProgressBox />
   </div>
 </template>
 
@@ -53,6 +60,6 @@ onMounted(() => {
   font-size: 12px;
 }
 .control {
-  margin-top: 5em;
+  margin-top: 1em;
 }
 </style>

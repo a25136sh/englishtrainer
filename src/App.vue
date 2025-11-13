@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import router from '@/router'
 import { RouterView } from 'vue-router'
 import { UserFilled } from '@element-plus/icons-vue'
 
+import router from '@/router'
 import { useUserStore } from './stores/user'
 
 const userStore = useUserStore()
