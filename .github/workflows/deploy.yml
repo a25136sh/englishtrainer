@@ -40,3 +40,7 @@ jobs:
 
       - name: Deploy to S3
         run: aws s3 sync ./dist s3://${{ secrets.S3_BUCKET_NAME }} --delete
+
+      - name: Clear cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id E28P1U0PK45VEI --paths "/*"
