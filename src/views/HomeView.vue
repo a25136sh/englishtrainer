@@ -7,6 +7,7 @@ import { useProblemStore } from '@/stores/problem'
 const problemStore = useProblemStore()
 
 const start = () => {
+  problemStore.clearProblem()
   problemStore.loadProblem()
   router.push({ name: 'try', params: { id: problemStore.genre } })
 }

@@ -47,6 +47,9 @@ export const useProblemStore = defineStore('problem', () => {
   const nextProblem = () => {
     index.value += 1
   }
+  const clearProblem = () => {
+    problems.value = []
+  }
 
-  return { genre, index, score, problems, isLast, loadProblem, nextProblem }
+  return { genre, index, score, problems, isLast, loadProblem, nextProblem, clearProblem }
 })
