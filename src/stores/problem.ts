@@ -6,7 +6,7 @@ import { ElMessage } from 'element-plus'
 export const useProblemStore = defineStore('problem', () => {
   const genre = ref('1')
   const index = ref(0)
-  const score = ref(80)
+  const score = ref(0)
   const try_file_path = ref('')
   const problems = ref<
     Array<{
@@ -49,6 +49,9 @@ export const useProblemStore = defineStore('problem', () => {
     index.value += 1
   }
   const clearProblem = () => {
+    index.value = 0
+    try_file_path.value = ''
+    score.value = 0
     problems.value = []
   }
 

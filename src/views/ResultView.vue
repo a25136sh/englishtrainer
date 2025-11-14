@@ -24,6 +24,9 @@ const pushNext = () => {
   problemStore.nextProblem()
   router.push({ name: 'try', params: { id: problemStore.genre } })
 }
+const finish = () => {
+  router.push({ name: 'home' })
+}
 
 onMounted(() => {
   setTimeout(() => {
@@ -52,7 +55,7 @@ onMounted(() => {
       src="https://70f45ec6-38a9-4685-abe4-cc5b076ed4e6.mdnplay.dev/shared-assets/audio/t-rex-roar.mp3"
     />
     <div class="control">
-      <el-button size="large" v-if="problemStore.isLast">終了</el-button>
+      <el-button size="large" v-if="problemStore.isLast" @click="finish">終了</el-button>
       <el-button size="large" @click="pushNext" v-else>次へ</el-button>
     </div>
     <ProgressBox />

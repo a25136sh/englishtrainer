@@ -22,7 +22,7 @@ const pollingResult = () => {
     })
     .catch((error) => {
       if (error.response.status == 404) {
-        setTimeout(pollingResult, 300)
+        setTimeout(pollingResult, 700)
       } else {
         ElMessage.error({
           message: '問題の取得に失敗しました',
@@ -32,7 +32,7 @@ const pollingResult = () => {
 }
 
 onMounted(() => {
-  setTimeout(pollingResult, 300)
+  setTimeout(pollingResult, 700)
 })
 </script>
 
