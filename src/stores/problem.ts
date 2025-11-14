@@ -7,6 +7,7 @@ export const useProblemStore = defineStore('problem', () => {
   const genre = ref('1')
   const index = ref(0)
   const score = ref(80)
+  const try_file_path = ref('')
   const problems = ref<
     Array<{
       id: number
@@ -51,5 +52,15 @@ export const useProblemStore = defineStore('problem', () => {
     problems.value = []
   }
 
-  return { genre, index, score, problems, isLast, loadProblem, nextProblem, clearProblem }
+  return {
+    genre,
+    index,
+    score,
+    try_file_path,
+    problems,
+    isLast,
+    loadProblem,
+    nextProblem,
+    clearProblem,
+  }
 })
