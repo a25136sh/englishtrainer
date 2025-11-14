@@ -13,7 +13,7 @@ const problemStore = useProblemStore()
 const pollingResult = () => {
   axios
     .get(
-      `${import.meta.env.VITE_API_HOST}/problems/${problemStore.$id}/result?user_id=${userStore.$id}`,
+      `${import.meta.env.VITE_API_HOST}/problems/${problemStore.index + 1}/result?user_id=${userStore.userId}`,
     )
     .then((response) => {
       problemStore.score = response.data.score * 100
