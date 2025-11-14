@@ -41,6 +41,16 @@ onMounted(() => {
         <span class="percentage-label">{{ review }}</span>
       </template>
     </el-progress>
+    <h4>あなたの音声</h4>
+    <audio
+      controls
+      :src="`https://s3.ap-northeast-1.amazonaws.com/${problemStore.try_file_path.slice(5)}`"
+    />
+    <h4>正解の音声</h4>
+    <audio
+      controls
+      src="https://70f45ec6-38a9-4685-abe4-cc5b076ed4e6.mdnplay.dev/shared-assets/audio/t-rex-roar.mp3"
+    />
     <div class="control">
       <el-button size="large" v-if="problemStore.isLast">終了</el-button>
       <el-button size="large" @click="pushNext" v-else>次へ</el-button>

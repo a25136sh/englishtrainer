@@ -16,7 +16,7 @@ const pollingResult = () => {
       `${import.meta.env.VITE_API_HOST}/problems/${problemStore.index + 1}/result?user_id=${userStore.userId}`,
     )
     .then((response) => {
-      problemStore.score = response.data.score * 100
+      problemStore.score = response.data.score
       problemStore.try_file_path = response.data.try_file_path
       router.push({ name: 'result' })
     })
