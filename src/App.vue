@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { RouterView } from 'vue-router'
 import { UserFilled } from '@element-plus/icons-vue'
 
@@ -14,6 +14,13 @@ const form = reactive({
   id: '',
   name: '',
   password: '',
+})
+const isSmartPhone = computed(() => {
+  if (window.matchMedia && window.matchMedia('(max-device-width: 640px)').matches) {
+    return true
+  } else {
+    return false
+  }
 })
 
 const backHome = () => {
@@ -64,7 +71,7 @@ const cancel = () => {
       >
     </div>
   </footer>
-  <el-drawer v-model="userTab" title="アカウント情報">
+  <el-drawer v-model="userTab" title="アカウント情報" :size="isSmartPhone ? '80%' : '30%'">
     <div v-if="userStore.username == 'guest'">
       <span>あなたは現在ログインしていません。</span>
       <el-form :model="form" label-width="auto" style="max-width: 600px; margin-top: 2em">
