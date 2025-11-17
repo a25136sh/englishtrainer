@@ -22,6 +22,9 @@ const review = computed(() => {
 const text = computed(() => {
   return problemStore.problems[problemStore.index]?.text || ''
 })
+const answer = computed(() => {
+  return problemStore.problems[problemStore.index]?.answer_file_path || ''
+})
 
 const pushNext = () => {
   problemStore.nextProblem()
@@ -59,7 +62,7 @@ onMounted(() => {
     <h4>正解の音声</h4>
     <audio
       controls
-      src="https://70f45ec6-38a9-4685-abe4-cc5b076ed4e6.mdnplay.dev/shared-assets/audio/t-rex-roar.mp3"
+      :src="`https://s3.ap-northeast-1.amazonaws.com/${import.meta.env.VITE_DATA_BUCKET}/public${answer}`"
       preload="auto"
     />
     <div class="control">
