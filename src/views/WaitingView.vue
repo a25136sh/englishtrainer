@@ -11,9 +11,10 @@ const userStore = useUserStore()
 const problemStore = useProblemStore()
 
 const pollingResult = () => {
+  const problemId = problemStore.problems[problemStore.index]?.id
   axios
     .get(
-      `${import.meta.env.VITE_API_HOST}/problems/${problemStore.index + 1}/result?user_id=${userStore.userId}`,
+      `${import.meta.env.VITE_API_HOST}/problems/${problemId}/result?user_id=${userStore.userId}`,
     )
     .then((response) => {
       if (new Date(response.data.created_at) > problemStore.lastTryTime) {
