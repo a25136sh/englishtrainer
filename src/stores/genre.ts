@@ -3,15 +3,15 @@ import { defineStore } from 'pinia'
 import { ElMessage } from 'element-plus'
 import axios from 'axios'
 
+interface GenreType {
+  id: number
+  name: string
+  display_name: string
+  created_at: string
+}
+
 export const useGenreStore = defineStore('genre', () => {
-  const genres = ref<
-    Array<{
-      id: number
-      name: string
-      display_name: string
-      created_at: string
-    }>
-  >([])
+  const genres = ref<Array<GenreType>>([])
 
   const loadGenre = () => {
     axios

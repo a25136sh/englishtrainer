@@ -16,7 +16,7 @@ const difficulty = ref(Math.floor(Math.random() * 5))
     <div style="margin-bottom: 1em; background: #555; padding: 0.5em 0; color: #fff">
       <span>職種:</span>
       <strong>
-        {{ genreStore.genres.find((x) => x.id == Number(problemStore.genre))?.name }}
+        {{ genreStore.genres.find((x) => x.id == Number(problemStore.genre))?.display_name }}
         <el-icon><Tools /></el-icon>
       </strong>
     </div>
