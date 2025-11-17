@@ -3,20 +3,20 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 
+interface ProblemType {
+  id: number
+  genre_id: number
+  text: string
+  answer_file_path: string
+  created_at: string
+}
+
 export const useProblemStore = defineStore('problem', () => {
   const genre = ref('1')
   const index = ref(0)
   const score = ref(0)
   const tryFilePath = ref('')
-  const problems = ref<
-    Array<{
-      id: number
-      genre_id: number
-      text: string
-      answer_file_path: string
-      created_at: string
-    }>
-  >([])
+  const problems = ref<Array<ProblemType>>([])
   const lastTryTime = ref<Date>(new Date())
   const isLast = computed(() => {
     return problems.value.length - 1 == index.value
@@ -27,7 +27,9 @@ export const useProblemStore = defineStore('problem', () => {
       .get(`${import.meta.env.VITE_API_HOST}/problems`)
       .then((response) => {
         console.log(response.data)
-        problems.value = response.data.problems
+        problems.value = response.data.problems.filter(
+          (x: ProblemType) => x.genre_id == parseInt(genre.value),
+        )
       })
       .catch((error) => {
         ElMessage.error({
