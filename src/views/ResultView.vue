@@ -40,7 +40,7 @@ onMounted(() => {
     <h2>回答結果</h2>
     <el-progress type="dashboard" :percentage="score">
       <template #default="{ percentage }">
-        <span class="percentage-value">{{ percentage }}</span>
+        <span class="percentage-value">{{ Math.round(percentage) }}</span>
         <span class="percentage-label">{{ review }}</span>
       </template>
     </el-progress>
@@ -48,11 +48,13 @@ onMounted(() => {
     <audio
       controls
       :src="`https://s3.ap-northeast-1.amazonaws.com/${problemStore.tryFilePath.slice(5)}`"
+      preload="auto"
     />
     <h4>正解の音声</h4>
     <audio
       controls
       src="https://70f45ec6-38a9-4685-abe4-cc5b076ed4e6.mdnplay.dev/shared-assets/audio/t-rex-roar.mp3"
+      preload="auto"
     />
     <div class="control">
       <el-button size="large" v-if="problemStore.isLast" @click="finish">終了</el-button>

@@ -17,17 +17,20 @@ const pollingResult = () => {
       `${import.meta.env.VITE_API_HOST}/problems/${problemId}/result?user_id=${userStore.userId}`,
     )
     .then((response) => {
-      if (new Date(response.data.created_at) > problemStore.lastTryTime) {
+      if (new Date(`${response.data.created_at}Z`) > new Date(problemStore.lastTryTime)) {
         problemStore.score = response.data.score
         problemStore.tryFilePath = response.data.try_file_path
+        console.log(response.data)
         router.push({ name: 'result' })
       } else {
-        setTimeout(pollingResult, 700)
+        console.log(`Try: ${problemStore.lastTryTime}`)
+        console.log(`Get: ${response.data.created_at}`)
+        setTimeout(pollingResult, 1000)
       }
     })
     .catch((error) => {
       if (error.response.status == 404) {
-        setTimeout(pollingResult, 700)
+        setTimeout(pollingResult, 1000)
       } else {
         ElMessage.error({
           message: '問題の取得に失敗しました',
@@ -37,7 +40,7 @@ const pollingResult = () => {
 }
 
 onMounted(() => {
-  setTimeout(pollingResult, 700)
+  setTimeout(pollingResult, 1000)
 })
 </script>
 

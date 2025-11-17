@@ -17,7 +17,7 @@ export const useProblemStore = defineStore('problem', () => {
   const score = ref(0)
   const tryFilePath = ref('')
   const problems = ref<Array<ProblemType>>([])
-  const lastTryTime = ref<Date>(new Date())
+  const lastTryTime = ref(new Date().toISOString())
   const isLast = computed(() => {
     return problems.value.length - 1 == index.value
   })
