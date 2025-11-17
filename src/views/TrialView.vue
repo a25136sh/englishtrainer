@@ -38,6 +38,8 @@ const micOn = () => {
           const params = new FormData()
           params.append('file', file)
 
+          problemStore.lastTryTime = new Date()
+
           axios
             .post(`${import.meta.env.VITE_API_HOST}/upload`, params)
             .then((response) => {

@@ -47,7 +47,7 @@ onMounted(() => {
     <h4>あなたの音声</h4>
     <audio
       controls
-      :src="`https://s3.ap-northeast-1.amazonaws.com/${problemStore.try_file_path.slice(5)}`"
+      :src="`https://s3.ap-northeast-1.amazonaws.com/${problemStore.tryFilePath.slice(5)}`"
     />
     <h4>正解の音声</h4>
     <audio

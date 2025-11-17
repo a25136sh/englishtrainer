@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Tickets } from '@element-plus/icons-vue'
 import { ElCarousel } from 'element-plus'
 
@@ -52,6 +52,10 @@ const clickGenre = (id: number) => {
   console.log(id)
   jobCard.value.setActiveItem(id - 1)
 }
+
+onMounted(() => {
+  genreStore.loadGenre()
+})
 </script>
 
 <template>
@@ -67,7 +71,7 @@ const clickGenre = (id: number) => {
             :key="genre.id"
             border
             @click="clickGenre(genre.id)"
-            >{{ genre.name }}</el-radio
+            >{{ genre.display_name }}</el-radio
           >
         </el-radio-group>
         <div>

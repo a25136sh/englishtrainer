@@ -16,9 +16,13 @@ const pollingResult = () => {
       `${import.meta.env.VITE_API_HOST}/problems/${problemStore.index + 1}/result?user_id=${userStore.userId}`,
     )
     .then((response) => {
-      problemStore.score = response.data.score
-      problemStore.try_file_path = response.data.try_file_path
-      router.push({ name: 'result' })
+      if (new Date(response.data.created_at) > problemStore.lastTryTime) {
+        problemStore.score = response.data.score
+        problemStore.tryFilePath = response.data.try_file_path
+        router.push({ name: 'result' })
+      } else {
+        setTimeout(pollingResult, 700)
+      }
     })
     .catch((error) => {
       if (error.response.status == 404) {

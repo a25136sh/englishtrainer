@@ -80,6 +80,7 @@ footer.et_footer a {
 .jobcard {
   width: 100%;
   margin-top: 3em;
+  display: none;
 }
 
 .jobimage {

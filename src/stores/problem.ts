@@ -7,7 +7,7 @@ export const useProblemStore = defineStore('problem', () => {
   const genre = ref('1')
   const index = ref(0)
   const score = ref(0)
-  const try_file_path = ref('')
+  const tryFilePath = ref('')
   const problems = ref<
     Array<{
       id: number
@@ -17,7 +17,7 @@ export const useProblemStore = defineStore('problem', () => {
       created_at: string
     }>
   >([])
-
+  const lastTryTime = ref<Date>(new Date())
   const isLast = computed(() => {
     return problems.value.length - 1 == index.value
   })
@@ -50,7 +50,7 @@ export const useProblemStore = defineStore('problem', () => {
   }
   const clearProblem = () => {
     index.value = 0
-    try_file_path.value = ''
+    tryFilePath.value = ''
     score.value = 0
     problems.value = []
   }
@@ -59,8 +59,9 @@ export const useProblemStore = defineStore('problem', () => {
     genre,
     index,
     score,
-    try_file_path,
+    tryFilePath,
     problems,
+    lastTryTime,
     isLast,
     loadProblem,
     nextProblem,
