@@ -25,6 +25,7 @@ const text = computed(() => {
 const answer = computed(() => {
   return problemStore.problems[problemStore.index]?.answer_file_path || ''
 })
+const dataBucket = import.meta.env.VITE_DATA_BUCKET
 
 const pushNext = () => {
   problemStore.nextProblem()
@@ -62,7 +63,7 @@ onMounted(() => {
     <h4>正解の音声</h4>
     <audio
       controls
-      :src="`https://s3.ap-northeast-1.amazonaws.com/${import.meta.env.VITE_DATA_BUCKET}/public${answer}`"
+      :src="`https://s3.ap-northeast-1.amazonaws.com/${dataBucket}/public${answer}`"
       preload="auto"
     />
     <div class="control">
