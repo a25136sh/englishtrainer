@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Tools } from '@element-plus/icons-vue'
 
 import { useGenreStore } from '@/stores/genre'
 import { useProblemStore } from '@/stores/problem'
@@ -17,7 +16,7 @@ const difficulty = ref(Math.floor(Math.random() * 5))
       <span>職種:</span>
       <strong>
         {{ genreStore.genres.find((x) => x.id == Number(problemStore.genre))?.display_name }}
-        <el-icon><Tools /></el-icon>
+        <!-- <el-icon><Tools /></el-icon> -->
       </strong>
     </div>
     <el-progress

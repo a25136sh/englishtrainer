@@ -19,6 +19,9 @@ const review = computed(() => {
     return '完璧！'
   }
 })
+const text = computed(() => {
+  return problemStore.problems[problemStore.index]?.text || ''
+})
 
 const pushNext = () => {
   problemStore.nextProblem()
@@ -44,6 +47,9 @@ onMounted(() => {
         <span class="percentage-label">{{ review }}</span>
       </template>
     </el-progress>
+    <div class="playfair-display" style="font-size: 20px; margin: 1em 0">
+      {{ text }}
+    </div>
     <h4>あなたの音声</h4>
     <audio
       controls
