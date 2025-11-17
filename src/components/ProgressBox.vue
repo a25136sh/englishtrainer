@@ -21,8 +21,8 @@ const difficulty = ref(Math.floor(Math.random() * 5))
       </strong>
     </div>
     <el-progress
-      :percentage="(1 / problemStore.problems.length) * 100"
-      :format="() => `1/${problemStore.problems.length}`"
+      :percentage="((problemStore.index + 1) / problemStore.problems.length) * 100"
+      :format="() => `${problemStore.index + 1}/${problemStore.problems.length}`"
       style="margin: 0 1em"
     />
     難易度: <el-rate v-model="difficulty" disabled size="small" />
