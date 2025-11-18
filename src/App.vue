@@ -6,7 +6,6 @@ import { userManager, signOutRedirect } from './oidc'
 
 import router from '@/router'
 import { useUserStore } from './stores/user'
-import { ElMessage } from 'element-plus'
 
 const userStore = useUserStore()
 
@@ -27,14 +26,6 @@ const isSmartPhone = computed(() => {
 const backHome = () => {
   router.push('/')
 }
-// const onSubmit = () => {
-//   userTab.value = false
-//   ElMessage.success({
-//     message: 'ログイン完了',
-//   })
-//   userStore.userId = Number(form.id)
-//   userStore.username = form.name
-// }
 const cognito = async () => {
   await userManager.signinRedirect({
     extraQueryParams: { lang: 'ja' },
@@ -43,23 +34,12 @@ const cognito = async () => {
 const signout = async () => {
   await signOutRedirect()
 }
-// const cancel = () => {
-//   form.id = ''
-//   form.name = ''
-//   form.password = ''
-//   userTab.value = false
-// }
 userManager.signinCallback().then((user) => {
   console.log(user)
-  ElMessage.success({
-    message: 'ログイン完了',
-  })
-  userStore.username = user?.profile['cognito:username']
+  userStore.login(String(user?.profile['cognito:username']))
 })
 userManager.signoutCallback().then(() => {
-  ElMessage.info({
-    message: 'サインアウトしました',
-  })
+  userStore.logout()
 })
 </script>
 
@@ -71,7 +51,7 @@ userManager.signoutCallback().then(() => {
       <span class="mochiy-pop-p-one-regular" style="margin-top: -6px">トレーナー</span>
     </div>
     <div class="user" @click="userTab = true" style="cursor: pointer">
-      <span class="username">{{ userStore.username }}</span>
+      <span class="username">{{ userStore.userName }}</span>
       <el-avatar :icon="UserFilled" />
     </div>
   </header>
@@ -93,7 +73,7 @@ userManager.signoutCallback().then(() => {
     </div>
   </footer>
   <el-drawer v-model="userTab" title="アカウント情報" :size="isSmartPhone ? '80%' : '30%'">
-    <div v-if="userStore.username == 'guest'">
+    <div v-if="userStore.userName == 'guest'">
       <span>あなたは現在ログインしていません。</span>
       <!-- <el-form :model="form" label-width="auto" style="max-width: 600px; margin-top: 2em">
         <el-form-item label="ユーザーID">
@@ -121,7 +101,7 @@ userManager.signoutCallback().then(() => {
     </div>
     <div v-else>
       <span
-        >あなたは現在 <b>{{ userStore.username }}</b> としてログインしています。</span
+        >あなたは現在 <b>{{ userStore.userName }}</b> としてログインしています。</span
       >
       <div style="margin-top: 1em">
         <el-button @click="signout" type="danger">ログアウト</el-button>
