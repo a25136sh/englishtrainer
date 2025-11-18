@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { Tickets } from '@element-plus/icons-vue'
-import { ElCarousel } from 'element-plus'
+import { ElCarousel, ElMessage } from 'element-plus'
+import axios from 'axios'
 
 import router from '@/router'
 import { useGenreStore } from '@/stores/genre'
@@ -12,32 +13,7 @@ const genreStore = useGenreStore()
 const problemStore = useProblemStore()
 
 const jobCard = ref()
-const ranking = [
-  {
-    user: 'Tom',
-    score: 80,
-  },
-  {
-    user: 'Nabe',
-    score: 70,
-  },
-  {
-    user: 'Bob',
-    score: 70,
-  },
-  {
-    user: 'Alice',
-    score: 65,
-  },
-  {
-    user: 'Carol',
-    score: 60,
-  },
-  {
-    user: 'Kretos',
-    score: 20,
-  },
-]
+const ranking = ref([])
 
 const start = () => {
   problemStore.clearProblem()
@@ -55,6 +31,18 @@ const clickGenre = (id: number) => {
 
 onMounted(() => {
   genreStore.loadGenre()
+  axios
+    .get(`${import.meta.env.VITE_API_HOST}/ranking`)
+    .then((response) => {
+      console.log(response.data)
+      ranking.value = response.data.ranking
+    })
+    .catch((error) => {
+      ElMessage.error({
+        message: 'ランキングの取得に失敗しました',
+      })
+      console.error(error)
+    })
 })
 </script>
 
@@ -98,9 +86,13 @@ onMounted(() => {
     <div style="display: flex; justify-content: space-around">
       <div style="width: 320px; margin-top: 1em">
         <h4>スコアランキング</h4>
-        <el-table :data="ranking" style="width: 320px">
-          <el-table-column prop="user" label="ユーザー名" />
-          <el-table-column prop="score" label="スコア" width="100" />
+        <el-table :data="ranking" style="width: 320px" v-loading="ranking.length == 0">
+          <el-table-column prop="name" label="ユーザー名" />
+          <el-table-column prop="score" label="スコア" width="100">
+            <template v-slot="{ row }">
+              {{ parseInt(row.score) }}
+            </template>
+          </el-table-column>
         </el-table>
       </div>
     </div>
