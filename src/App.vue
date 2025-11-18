@@ -36,7 +36,9 @@ const backHome = () => {
 //   userStore.username = form.name
 // }
 const cognito = async () => {
-  await userManager.signinRedirect()
+  await userManager.signinRedirect({
+    extraQueryParams: { lang: 'ja' },
+  })
 }
 const signout = async () => {
   await signOutRedirect()
@@ -53,6 +55,11 @@ userManager.signinCallback().then((user) => {
     message: 'ログイン完了',
   })
   userStore.username = user?.profile['cognito:username']
+})
+userManager.signoutCallback().then(() => {
+  ElMessage.info({
+    message: 'サインアウトしました',
+  })
 })
 </script>
 
