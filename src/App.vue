@@ -2,6 +2,7 @@
 import { ref, reactive, computed } from 'vue'
 import { RouterView } from 'vue-router'
 import { UserFilled } from '@element-plus/icons-vue'
+import { userManager } from './oidc'
 
 import router from '@/router'
 import { useUserStore } from './stores/user'
@@ -34,12 +35,18 @@ const onSubmit = () => {
   userStore.userId = Number(form.id)
   userStore.username = form.name
 }
+const cognito = async () => {
+  await userManager.signinRedirect()
+}
 const cancel = () => {
   form.id = ''
   form.name = ''
   form.password = ''
   userTab.value = false
 }
+userManager.signinCallback().then((user) => {
+  console.log(user)
+})
 </script>
 
 <template>
@@ -94,6 +101,9 @@ const cancel = () => {
           <el-button @click="cancel">キャンセル</el-button>
         </el-form-item>
       </el-form>
+      <div>
+        <el-button @click="cognito">Cognitoログイン</el-button>
+      </div>
     </div>
     <span v-else
       >あなたは現在 <b>{{ userStore.username }}</b> としてログインしています。</span

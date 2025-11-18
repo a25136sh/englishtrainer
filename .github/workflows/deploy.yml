@@ -19,6 +19,8 @@ jobs:
           envkey_VITE_API_HOST: ${{ secrets.VITE_API_HOST }}
           envkey_VITE_TRY_SOUND_BUCKET: ${{ secrets.VITE_TRY_SOUND_BUCKET }}
           envkey_VITE_DATA_BUCKET: ${{ secrets.VITE_DATA_BUCKET }}
+          envkey_VITE_CLOUD_FRONT: ${{ secrets.VITE_CLOUD_FRONT }}
+          envkey_VITE_COGNITO_CLIENT_ID: ${{ secrets.VITE_COGNITO_CLIENT_ID }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
