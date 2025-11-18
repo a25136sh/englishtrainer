@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { RouterView } from 'vue-router'
 import { UserFilled } from '@element-plus/icons-vue'
-import { userManager } from './oidc'
+import { userManager, signOutRedirect } from './oidc'
 
 import router from '@/router'
 import { useUserStore } from './stores/user'
@@ -11,11 +11,11 @@ import { ElMessage } from 'element-plus'
 const userStore = useUserStore()
 
 const userTab = ref(false)
-const form = reactive({
-  id: '',
-  name: '',
-  password: '',
-})
+// const form = reactive({
+//   id: '',
+//   name: '',
+//   password: '',
+// })
 const isSmartPhone = computed(() => {
   if (window.matchMedia && window.matchMedia('(max-device-width: 640px)').matches) {
     return true
@@ -27,25 +27,32 @@ const isSmartPhone = computed(() => {
 const backHome = () => {
   router.push('/')
 }
-const onSubmit = () => {
-  userTab.value = false
-  ElMessage.success({
-    message: 'ログイン完了',
-  })
-  userStore.userId = Number(form.id)
-  userStore.username = form.name
-}
+// const onSubmit = () => {
+//   userTab.value = false
+//   ElMessage.success({
+//     message: 'ログイン完了',
+//   })
+//   userStore.userId = Number(form.id)
+//   userStore.username = form.name
+// }
 const cognito = async () => {
   await userManager.signinRedirect()
 }
-const cancel = () => {
-  form.id = ''
-  form.name = ''
-  form.password = ''
-  userTab.value = false
+const signout = async () => {
+  await signOutRedirect()
 }
+// const cancel = () => {
+//   form.id = ''
+//   form.name = ''
+//   form.password = ''
+//   userTab.value = false
+// }
 userManager.signinCallback().then((user) => {
   console.log(user)
+  ElMessage.success({
+    message: 'ログイン完了',
+  })
+  userStore.username = user?.profile['cognito:username']
 })
 </script>
 
@@ -81,7 +88,7 @@ userManager.signinCallback().then((user) => {
   <el-drawer v-model="userTab" title="アカウント情報" :size="isSmartPhone ? '80%' : '30%'">
     <div v-if="userStore.username == 'guest'">
       <span>あなたは現在ログインしていません。</span>
-      <el-form :model="form" label-width="auto" style="max-width: 600px; margin-top: 2em">
+      <!-- <el-form :model="form" label-width="auto" style="max-width: 600px; margin-top: 2em">
         <el-form-item label="ユーザーID">
           <el-input v-model="form.id" />
         </el-form-item>
@@ -100,13 +107,18 @@ userManager.signinCallback().then((user) => {
           >
           <el-button @click="cancel">キャンセル</el-button>
         </el-form-item>
-      </el-form>
-      <div>
-        <el-button @click="cognito">Cognitoログイン</el-button>
+      </el-form> -->
+      <div style="margin-top: 1em">
+        <el-button @click="cognito" type="primary">ログイン</el-button>
       </div>
     </div>
-    <span v-else
-      >あなたは現在 <b>{{ userStore.username }}</b> としてログインしています。</span
-    >
+    <div v-else>
+      <span
+        >あなたは現在 <b>{{ userStore.username }}</b> としてログインしています。</span
+      >
+      <div style="margin-top: 1em">
+        <el-button @click="signout" type="danger">ログアウト</el-button>
+      </div>
+    </div>
   </el-drawer>
 </template>
