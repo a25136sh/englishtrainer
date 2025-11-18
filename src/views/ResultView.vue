@@ -25,7 +25,6 @@ const text = computed(() => {
 const answer = computed(() => {
   return problemStore.problems[problemStore.index]?.answer_file_path || ''
 })
-const dataBucket = import.meta.env.VITE_DATA_BUCKET
 
 const pushNext = () => {
   problemStore.nextProblem()

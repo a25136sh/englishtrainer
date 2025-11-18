@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios'
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 
 import router from '@/router'
@@ -10,7 +10,10 @@ import { useProblemStore } from '@/stores/problem'
 const userStore = useUserStore()
 const problemStore = useProblemStore()
 
+const poll = ref(0)
+
 const pollingResult = () => {
+  poll.value += 1
   const problemId = problemStore.problems[problemStore.index]?.id
   axios
     .get(
@@ -47,6 +50,7 @@ onMounted(() => {
 <template>
   <div style="text-align: center">
     <h3>しばらくお待ちください...</h3>
+    <div>結果を待機中({{ poll }})</div>
   </div>
 </template>
 
