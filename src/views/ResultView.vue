@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import confetti from 'canvas-confetti'
 
 import router from '@/router'
 import { useProblemStore } from '@/stores/problem'
@@ -37,6 +38,7 @@ const finish = () => {
 onMounted(() => {
   setTimeout(() => {
     score.value = problemStore.score
+    if (score.value > 80) confetti()
   }, 0)
 })
 </script>

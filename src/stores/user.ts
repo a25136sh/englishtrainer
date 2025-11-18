@@ -16,6 +16,7 @@ export const useUserStore = defineStore('user', () => {
         console.log(response.data)
         userId.value = parseInt(response.data.user_id)
         userName.value = response.data.username
+        localStorage.setItem('userName', response.data.username)
         ElMessage.success({
           message: 'ログイン完了',
         })

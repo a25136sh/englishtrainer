@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { UserFilled } from '@element-plus/icons-vue'
 import { userManager, signOutRedirect } from './oidc'
@@ -10,11 +10,6 @@ import { useUserStore } from './stores/user'
 const userStore = useUserStore()
 
 const userTab = ref(false)
-// const form = reactive({
-//   id: '',
-//   name: '',
-//   password: '',
-// })
 const isSmartPhone = computed(() => {
   if (window.matchMedia && window.matchMedia('(max-device-width: 640px)').matches) {
     return true
@@ -32,14 +27,16 @@ const cognito = async () => {
   })
 }
 const signout = async () => {
+  localStorage.clear()
   await signOutRedirect()
 }
 userManager.signinCallback().then((user) => {
   console.log(user)
   userStore.login(String(user?.profile['cognito:username']))
 })
-userManager.signoutCallback().then(() => {
-  userStore.logout()
+onMounted(() => {
+  const userName = localStorage.getItem('userName')
+  if (userName) userStore.login(userName)
 })
 </script>
 
@@ -75,26 +72,6 @@ userManager.signoutCallback().then(() => {
   <el-drawer v-model="userTab" title="アカウント情報" :size="isSmartPhone ? '80%' : '30%'">
     <div v-if="userStore.userName == 'guest'">
       <span>あなたは現在ログインしていません。</span>
-      <!-- <el-form :model="form" label-width="auto" style="max-width: 600px; margin-top: 2em">
-        <el-form-item label="ユーザーID">
-          <el-input v-model="form.id" />
-        </el-form-item>
-        <el-form-item label="ユーザー名">
-          <el-input v-model="form.name" />
-        </el-form-item>
-        <el-form-item label="パスワード">
-          <el-input type="password" v-model="form.password" />
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="primary"
-            @click="onSubmit"
-            :disabled="form.id == '' || form.name == '' || form.password == ''"
-            >ログイン</el-button
-          >
-          <el-button @click="cancel">キャンセル</el-button>
-        </el-form-item>
-      </el-form> -->
       <div style="margin-top: 1em">
         <el-button @click="cognito" type="primary">ログイン</el-button>
       </div>
