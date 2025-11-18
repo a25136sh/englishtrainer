@@ -61,11 +61,7 @@ onMounted(() => {
       preload="auto"
     />
     <h4>正解の音声</h4>
-    <audio
-      controls
-      :src="`https://s3.ap-northeast-1.amazonaws.com/${dataBucket}/public${answer}`"
-      preload="auto"
-    />
+    <audio controls :src="`/public${answer}`" preload="auto" />
     <div class="control">
       <el-button size="large" v-if="problemStore.isLast" @click="finish">終了</el-button>
       <el-button size="large" @click="pushNext" v-else>次へ</el-button>
